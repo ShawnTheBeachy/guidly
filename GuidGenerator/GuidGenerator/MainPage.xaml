@@ -1,0 +1,44 @@
+﻿<Page x:Class="GuidGenerator.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      mc:Ignorable="d">
+
+    <Page.Resources>
+        <Flyout x:Name="CopiedFlyout">
+            <TextBlock x:Name="CopiedTextBlock"
+                       FontSize="14"
+                       Text="Copied to clipboard!"
+                       TextWrapping="Wrap" />
+        </Flyout>
+    </Page.Resources>
+
+    <RelativePanel x:Name="MainPanel"
+                   Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                   DoubleTapped="MainPanel_DoubleTapped">
+        <TextBox x:Name="CurrentGuidTextBox"
+                 IsReadOnly="True"
+                 Margin="12"
+                 RelativePanel.AlignLeftWithPanel="True"
+                 RelativePanel.AlignRightWithPanel="True"
+                 RelativePanel.AlignTopWithPanel="True"
+                 Text="{x:Bind CurrentGuid, Mode=OneWay}" />
+    </RelativePanel>
+
+    <Page.BottomAppBar>
+
+        <CommandBar Style="{ThemeResource CommandBarRevealStyle}">
+            <AppBarButton x:Name="GenerateButton"
+                          Click="GenerateButton_Click"
+                          Icon="Refresh"
+                          Label="Regenerate" />
+            <AppBarButton x:Name="CopyButton"
+                          Click="CopyButton_Click"
+                          Icon="Copy"
+                          Label="Copy" />
+        </CommandBar>
+        
+    </Page.BottomAppBar>
+    
+</Page>
