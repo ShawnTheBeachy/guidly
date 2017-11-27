@@ -1,21 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.VoiceCommands;
+﻿using Windows.ApplicationModel.Activation;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace GuidGenerator
+namespace Guidly
 {
     sealed partial class App : Application
     {
-        public App() =>
+        public App()
+        {
             InitializeComponent();
+            RequestedTheme = Settings.Instance.AppTheme;
+        }
         
-        protected async override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             ColorTitleBar();
             var rootFrame = Window.Current.Content as Frame;
@@ -33,17 +32,6 @@ namespace GuidGenerator
 
                 Window.Current.Activate();
             }
-
-            await InstallVCDFileAsync();
-        }
-
-        private async Task InstallVCDFileAsync()
-        {
-            if (VoiceCommandDefinitionManager.InstalledCommandDefinitions?.Count > 0)
-                return;
-
-            var vcdFile = await Package.Current.InstalledLocation.GetFileAsync("CortanaCommands.xml");
-            await VoiceCommandDefinitionManager.InstallCommandDefinitionsFromStorageFileAsync(vcdFile);
         }
 
         private void ColorTitleBar()

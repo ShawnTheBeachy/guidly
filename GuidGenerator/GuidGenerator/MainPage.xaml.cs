@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.System;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Navigation;
 
-namespace GuidGenerator
+namespace Guidly
 {
     public sealed partial class MainPage : Page
     {
@@ -24,13 +30,45 @@ namespace GuidGenerator
 
         private bool _isCompactView = false;
 
-        public MainPage() => 
+        public MainPage()
+        {
             InitializeComponent();
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            CoreWindow.GetForCurrentThread().KeyDown += CoreWindow_KeyDown;
+            Window.Current.Activated += Window_Activated;
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+            CoreWindow.GetForCurrentThread().KeyDown -= CoreWindow_KeyDown;
+        }
+
+        private async void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs args)
+        {
+            switch (args.VirtualKey)
+            {
+                case VirtualKey.F:
+                    await ToggleViewModeAsync();
+                    break;
+                case VirtualKey.T:
+                    ToggleTheme();
+                    break;
+                case VirtualKey.G:
+                    CurrentGuid = Guid.NewGuid();
+                    CopyGuid();
+                    break;
+            }
+        }
 
         private void CopyButton_Click(object sender, RoutedEventArgs e) =>
             CopyGuid(sender);
 
-        private void CopyGuid(object sender)
+        private void CopyGuid(object sender = null)
         {
             var dataPackage = new DataPackage
             {
@@ -38,7 +76,9 @@ namespace GuidGenerator
             };
             dataPackage.SetText(CurrentGuid.ToString());
             Clipboard.SetContent(dataPackage);
-            CopiedFlyout.ShowAt(sender as FrameworkElement);
+
+            if (sender is FrameworkElement element)
+                CopiedFlyout.ShowAt(element);
         }
 
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
@@ -47,10 +87,22 @@ namespace GuidGenerator
             CopyGuid(sender);
         }
 
-        private async void MainPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private async void MainPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) =>
+            await ToggleViewModeAsync();
+
+        private void ToggleTheme() =>
+            Settings.Instance.AppTheme = Settings.Instance.AppTheme == ApplicationTheme.Dark ? ApplicationTheme.Light : ApplicationTheme.Dark;
+
+        private void ToggleThemeMenuItem_Click(object sender, RoutedEventArgs e) =>
+            ToggleTheme();
+
+        private async Task ToggleViewModeAsync()
         {
             await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(_isCompactView ? ApplicationViewMode.Default : ApplicationViewMode.CompactOverlay);
             _isCompactView = !_isCompactView;
         }
+
+        private void Window_Activated(object sender, WindowActivatedEventArgs e) =>
+            CopyGuid();
     }
 }
