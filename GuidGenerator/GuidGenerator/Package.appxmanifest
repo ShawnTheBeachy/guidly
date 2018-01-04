@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="GuidGen" Publisher="CN=Tastes Like Turkey" Version="1.0.3.0" />
-  <mp:PhoneIdentity PhoneProductId="591c4659-3dcd-49d3-8526-91aea07efd3b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="34346esbe118.2977B9F3845" Publisher="CN=81AF1951-3AAC-46FB-ADA7-065280F94764" Version="1.1.0.0" />
+  <mp:PhoneIdentity PhoneProductId="7a2035b0-28d0-4e01-9df7-85c122f0121a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Guid Gen</DisplayName>
     <PublisherDisplayName>Tastes Like Turkey</PublisherDisplayName>
