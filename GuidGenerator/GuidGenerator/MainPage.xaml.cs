@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using Windows.UI.Core;
-using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -30,12 +28,10 @@ namespace Guidly
 
         private bool _isCompactView = false;
 
-        public MainPage()
-        {
+        public MainPage() =>
             InitializeComponent();
-        }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             CoreWindow.GetForCurrentThread().KeyDown += CoreWindow_KeyDown;
@@ -76,9 +72,7 @@ namespace Guidly
             };
             dataPackage.SetText(CurrentGuid.ToString());
             Clipboard.SetContent(dataPackage);
-
-            if (sender is FrameworkElement element)
-                CopiedFlyout.ShowAt(element);
+            CopiedHint.Visibility = Visibility.Visible;
         }
 
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
@@ -90,8 +84,11 @@ namespace Guidly
         private async void MainPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e) =>
             await ToggleViewModeAsync();
 
-        private void ToggleTheme() =>
+        private void ToggleTheme()
+        {
             Settings.Instance.AppTheme = Settings.Instance.AppTheme == ApplicationTheme.Dark ? ApplicationTheme.Light : ApplicationTheme.Dark;
+            App.CustomizeTitleBar();
+        }
 
         private void ToggleThemeMenuItem_Click(object sender, RoutedEventArgs e) =>
             ToggleTheme();

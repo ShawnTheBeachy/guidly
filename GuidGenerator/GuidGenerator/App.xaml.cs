@@ -1,4 +1,6 @@
 ﻿using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -16,7 +18,11 @@ namespace Guidly
         
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            ColorTitleBar();
+            ApplicationView.PreferredLaunchViewSize = new Size(350, 275);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(350, 275));
+
+            CustomizeTitleBar();
             var rootFrame = Window.Current.Content as Frame;
             
             if (rootFrame == null)
@@ -34,16 +40,16 @@ namespace Guidly
             }
         }
 
-        private void ColorTitleBar()
+        public static void CustomizeTitleBar()
         {
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-            var themeColor = (Color)Resources["SystemAccentColor"];
-            titleBar.BackgroundColor = themeColor;
-            titleBar.ButtonBackgroundColor = themeColor;
-            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(255, 152, 142, 133);
-            titleBar.ButtonPressedBackgroundColor = Color.FromArgb(255, 113, 106, 100);
-            titleBar.ForegroundColor = Colors.White;
-            titleBar.ButtonForegroundColor = Colors.White;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonHoverBackgroundColor = Settings.Instance.AppTheme == ApplicationTheme.Dark ? Color.FromArgb(40, 255, 255, 255) : Color.FromArgb(40, 100, 100, 100);
+            titleBar.ButtonPressedBackgroundColor = Settings.Instance.AppTheme == ApplicationTheme.Dark ? Color.FromArgb(80, 255, 255, 255) : Color.FromArgb(80, 100, 100, 100);
+            titleBar.ForegroundColor = Settings.Instance.AppTheme == ApplicationTheme.Dark ? Colors.White : Colors.Black;
+            titleBar.ButtonForegroundColor = Settings.Instance.AppTheme == ApplicationTheme.Dark ? Colors.White : Colors.Black;
+            titleBar.ButtonHoverForegroundColor = Settings.Instance.AppTheme == ApplicationTheme.Dark ? Colors.White : Colors.Black;
         }
     }
 }
