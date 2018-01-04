@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="34346esbe118.2977B9F3845" Publisher="CN=81AF1951-3AAC-46FB-ADA7-065280F94764" Version="1.1.0.0" />
+  <Identity Name="34346esbe118.2977B9F3845" Publisher="CN=81AF1951-3AAC-46FB-ADA7-065280F94764" Version="1.1.2.0" />
   <mp:PhoneIdentity PhoneProductId="7a2035b0-28d0-4e01-9df7-85c122f0121a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Guid Gen</DisplayName>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Guidly.App">
-      <uap:VisualElements DisplayName="Guid Gen" Square150x150Logo="Assets\Logo\Square150x150Logo.png" Square44x44Logo="Assets\Logo\Square44x44Logo.png" Description="Guid generator" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Guid Gen" Square150x150Logo="Assets\Logo\Square150x150Logo.png" Square44x44Logo="Assets\Logo\Square44x44Logo.png" Description="Guid generator" BackgroundColor="#783F3F">
         <uap:DefaultTile Wide310x150Logo="Assets\Logo\Wide310x150Logo.png" ShortName="Guid Gen" Square310x310Logo="Assets\Logo\LargeTile.png" Square71x71Logo="Assets\Logo\SmallTile.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
@@ -23,7 +23,7 @@
             <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\Logo\SplashScreen.png" BackgroundColor="#8B827A" />
+        <uap:SplashScreen Image="Assets\Logo\SplashScreen.png" BackgroundColor="#783F3F" />
       </uap:VisualElements>
     </Application>
   </Applications>
